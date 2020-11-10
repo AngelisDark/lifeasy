@@ -6,48 +6,44 @@
 using namespace std;
 
 int space(string dir) {
-    string command = "dir "+ dir +" /a /s | find \"bytes\" > fuck";
+    string command = "dir "+ dir +" /a /s | find \"bytes\" > temp";
     const char *comm = command.c_str();
     system(comm);
-    ifstream fuckfile("fuck");
-    string fucktext;
-    int fucklines = 0;
-    while (getline (fuckfile, fucktext)) {
-        fucklines += 1;
+    ifstream tempfile("temp");
+    string spacetext;
+    int spacelines = 0;
+    while (getline (tempfile, spacetext)) {
+        spacelines += 1;
     }
-    //string fuckarray[fucklines];
-    fuckfile.close();
-    //cout << fucklines << endl;
-    int fuckline = fucklines - 1;
-    fucklines = 0;
-    ifstream newfuckfile("fuck");
-    string impfucktext;
-    while (getline (newfuckfile, fucktext)) {
-        fucklines += 1;
-        //cout << fuckline << " " << fucklines << endl;
-        if (fuckline == fucklines) {
-            impfucktext = fucktext;
+    tempfile.close();
+    int spaceline = spacelines - 1;
+    spacelines = 0;
+    ifstream newtempfile("temp");
+    string impspacetext;
+    while (getline (newtempfile, spacetext)) {
+        spacelines += 1;
+        if (spaceline == spacelines) {
+            impspacetext = spacetext;
             break;
         }
     }
-    newfuckfile.close();
-    system("del fuck");
-    //cout << impfucktext;
-    string yotext;
-    for (int i=0; i< impfucktext.length(); i++) {
-        if (impfucktext.at(i) == ' ' && impfucktext.at(i+1) == ' ')
+    newtempfile.close();
+    system("del temp");
+    string finaltext;
+    for (int i=0; i< impspacetext.length(); i++) {
+        if (impspacetext.at(i) == ' ' && impspacetext.at(i+1) == ' ')
             continue;
         else
-            yotext += impfucktext.at(i);
+            finaltext += impspacetext.at(i);
     }
-    yotext.erase(0, 1);
+    finaltext.erase(0, 1);
     string bytes;
     int count = 0;
-    for (int i=0; i< yotext.length(); i++) {
+    for (int i=0; i< finaltext.length(); i++) {
         if (count == 2) {
-            bytes += yotext.at(i);
+            bytes += finaltext.at(i);
         }
-        if (yotext.at(i) == ' ') {
+        if (finaltext.at(i) == ' ') {
             count += 1;
         }
         if (count == 3) {
@@ -61,10 +57,8 @@ int space(string dir) {
             proper_bytes += bytes.at(i);
         }
     }
-    //cout << proper_bytes;
     stringstream convert(proper_bytes);
     convert >> final_mega_bytes;
-    //cout << final_mega_bytes/1000000 << " MB";
     return final_mega_bytes/1000000;
 }
 
