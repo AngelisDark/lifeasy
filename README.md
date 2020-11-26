@@ -7,3 +7,4 @@ pingsweep  --> Scans network for live ip's by pinging.
 ytdl  --> Youtube downloader.  
 junkcalc  --> Calculates the amount of temp files.  
 clean   --> Deletes temp files.  
+temp1mail -->  Temp mail script (Todo: Make it into a tg bot)
